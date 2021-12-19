@@ -14,16 +14,15 @@ class dbManagement{
             this.object[key] = obj[key];
         }
     }
-    addObj(obj) {
-        for (let index of this.objects) {
-            if (index.visitDate === obj.visitDate) {
-                if(index.visitTime===obj.visitTime){
-                    return false;  
-                }   
-            }
+    addObj(obj,destination) {
+        if (destination.toUpperCase() === 'PRODUCTS') {
+            this.Products.push(obj);
+            localStorage.setItem('warehouseProducts', JSON.stringify(this.Products));   
         }
-        this.objects.push(obj);
-        localStorage.setItem('warehouse', JSON.stringify(this.objects));
+        else {
+            this.Categories.push(obj);
+            localStorage.setItem('warehouseCategories', JSON.stringify(this.Categories));   
+        }
         return true;
     }
     getObjectsMatchingParameterValue(parameter, value) {
