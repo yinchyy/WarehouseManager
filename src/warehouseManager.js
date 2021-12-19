@@ -9,15 +9,27 @@ class warehouseManager extends elementToolsLib {
         this.visits = new dbManagement();
         this.initiateMainContainer();
     }
-    generateNavMenu() {
-        this.renderElem("div", "navMenu", null, "mainContainer", null);
-        this.renderElem("button", "mainPageButton", "navButton", "navMenu", "Main page");   
-        this.renderElem("button", "productsPageButton", "navButton", "navMenu", "Manage products");   
-        this.renderElem("button", "categoriesPageButton", "navButton", "navMenu", "Manage categories");   
+    clearContent() {
+        if (document.getElementById("contentContainer")) {
+            document.getElementById("contentContainer").remove();
+        }
     }
-    generateMainPage() {
-        this.generateNavMenu();
-        document.getElementById("mainPageButton").setAttribute("class", "activePageButton");
+    generateNavMenu(active) {
+        const elems = new Array('main', 'products', 'categories');
+        this.renderElem("div", "navMenu", null, "mainContainer", null);
+        for (let elem of elems) {
+            let item = this.renderElem("button", `${elem}PageButton`, "navButton", "navMenu", `${elem.charAt(0).toUpperCase()}${elem.slice(1)}`);
+            item.setAttribute("onclick", `w1.generatePage('${elem}')`);
+            item.setAttribute("class", "navButton");
+        }
+        document.getElementById(active+'PageButton').setAttribute("class", "activePageButton");
+    }
+    generatePage(active) {
+        this.clearContent();
+        this.generateNavMenu(active);
         this.renderElem("div", "contentContainer", null, "mainContainer", null);
+        if (active === 'products') {
+            
+        }
     }
  }

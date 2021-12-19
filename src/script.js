@@ -1,2 +1,2 @@
 w1 = new warehouseManager();
-w1.generateMainPage();
+w1.generatePage('main');
