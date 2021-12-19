@@ -132,3 +132,14 @@ body {
 #closePopUpButton:hover {
   color: black;
 }
+.addItemForm {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  justify-content: center;
+  padding: 15px;
+}
+#submitButton {
+  margin-top: 20px;
+  height: 30px;
+}
