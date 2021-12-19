@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: rgb(39, 39, 39);
+  color: white;
+}
+#mainContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+#navMenu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  width: 80%;
+  height: 10%;
+  background-color: #666;
+  border-radius: 0 0 15px 15px;
+}
+.navButton,
+.activePageButton {
+  height: 90%;
+  width: 300px;
+  border-radius: 0 0 15px 15px;
+  background-color: #ff9131;
+  border: 1px solid #444;
+}
+.activePageButton {
+  background-color: #ff586e;
+}
+.activePageButton:hover {
+  background-color: #cc253b;
+}
+.navButton:hover {
+  background-color: #c06719;
+  color: white;
+}
+#contentContainer {
+  margin-top: 2vh;
+  width: 80%;
+  height: 80%;
+  background-color: #666;
+  border-radius: 15px;
+}
