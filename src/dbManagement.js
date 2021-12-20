@@ -14,12 +14,13 @@ class dbManagement{
             this.object[key] = obj[key];
         }
     }
-    addObj(obj,destination) {
-        if (destination.toUpperCase() === 'PRODUCTS') {
+    addObj(obj,type) {
+        if (type.toUpperCase() === 'PRODUCT') {
             this.Products.push(obj);
+            this.Categories[obj['categoryID']]['_createdProducts']++;
             localStorage.setItem('warehouseProducts', JSON.stringify(this.Products));   
         }
-        else {
+        else if(type.toUpperCase() === 'CATEGORY') {
             this.Categories.push(obj);
             localStorage.setItem('warehouseCategories', JSON.stringify(this.Categories));   
         }
