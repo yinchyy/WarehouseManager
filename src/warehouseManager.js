@@ -23,39 +23,49 @@ class warehouseManager extends elementToolsLib {
         document.getElementById(active+'PageButton').setAttribute("class", "activePageButton");
     }
     generatePage(active) {
+        let headerFields,type,targetArr;
         this.clearContent();
         this.generateNavMenu(active);
         this.renderElem("div", "contentContainer", null, "mainContainer", null);
         if (active === 'products') {
+            headerFields = new Array("Name", "Category", "Price", "In stock", "Description");
+            type = 'Product';
+            targetArr = this.warehouse.Products;
+        }
+        else if (active === 'categories') {
+            headerFields = new Array("Name", "Description");
+            type = 'Category';
+            targetArr = this.warehouse.Categories;
+            }
+        if (active === 'products' || active === 'categories') {
             this.renderElem("div", "storage", "dbContent", "contentContainer", null);
-            const headerFields = new Array("Name", "Category", "Price", "In stock", "Description");
             this.renderElem("div", "buttonsContainer", null, "contentContainer", null);
-            this.renderElem("button", "addItem", "managementButtons", "buttonsContainer", "Add Item").setAttribute("onclick","w1.addItem('Product')");
+            this.renderElem("button", "addItem", "managementButtons", "buttonsContainer", "Add Item").setAttribute("onclick",`w1.addItem('${type}')`);
             this.renderElem("button", "removeItem", "managementButtons", "buttonsContainer", "Remove Item");
             this.renderElem("div", "itemHeader", null, "storage", null);
             this.renderElem("div", "itemsContainer", null, "storage", null);
-
+        
             for (const value of headerFields) {
                 this.renderElem("p", `header${value}`, "headerItem", "itemHeader", value);
             }
-
-            console.log(this.warehouse.Products);
-            for (const index in this.warehouse.Products) {
+        
+            console.log(targetArr);
+            for (const index in targetArr) {
                 this.renderElem("div", `item${index}`, "itemContent", "itemsContainer", null);
-                console.log(this.warehouse.Products[index]);
-                for (const value in this.warehouse.Products[index]) {
-                    this.renderElem("p", `i${index}${value}`, null, `item${index}`, this.warehouse.Products[index][value]);   
+                console.log(targetArr[index]);
+                for (const value in targetArr[index]) {
+                    this.renderElem("p", `i${index}${value}`, null, `item${index}`, targetArr[index][value]);   
                 }
-                document.getElementById(`i${index}categoryID`).innerText = this.warehouse.Categories[this.warehouse.Products[index].categoryID].name;
+                if (active === 'products') {
+                    document.getElementById(`i${index}categoryID`).innerText = this.warehouse.Categories[this.warehouse.Products[index].categoryID].name;   
+                }
             }
-        }
-        else if (active === 'categories') {
             
         }
     }
     addItem(type) {
         this.openPopUp();
-        this.renderElem("form", `add${type}`, "addItemForm", "popUpContainer", null);
+        this.renderElem("form", `add${type}`, "addItemForm", "popUpContainer", null).setAttribute("onSubmit",`w1.displayForm('add${type}'); return true;`);
         let inputType;
         if (type.toUpperCase() === "PRODUCT") {
             inputType = new Product();
@@ -87,5 +97,8 @@ class warehouseManager extends elementToolsLib {
         let submitButton = this.renderElem("input", "submitButton", null, `add${type}`, null);
         submitButton.setAttribute("type", "submit");
         submitButton.value = "Add Item";
+    }
+    displayForm(formID) {
+        console.log(document.getElementById(formID));
     }
  }
