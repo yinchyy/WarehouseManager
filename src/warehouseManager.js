@@ -152,9 +152,24 @@ class warehouseManager extends elementToolsLib {
             header.insertBefore(rHeader, header.childNodes[0]);
             content.insertBefore(rContent, content.childNodes[0]);
             for (const index in targetArr) {
-                rContent.innerHTML += `<div class='itemContent'><input type='checkbox' id='R${index}'/></div>`;
+                rContent.innerHTML += `<div class='itemContent'><input type='checkbox' value='${index}' class='checkRemove'/></div>`;
+            }   
+        }
+        else{
+            let checkboxes = document.querySelectorAll(".checkRemove");
+            let toRemove = new Array();
+            for (const elem of checkboxes) {
+                if (elem.checked) {
+                    toRemove.push(elem.value);
+                }
             }
-                
+            if (active === 'products') {
+                this.warehouse.removeObj(toRemove, 'product');   
             }
+            else if (active === 'categories') {
+                this.warehouse.removeObj(toRemove, 'category');
+            }
+            this.generatePage(active);
+        }
     }
 }
